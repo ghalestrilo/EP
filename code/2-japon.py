@@ -1,3 +1,6 @@
+### IMPORTS ###
+from eplib.reproductor import countRepetitions, reproducir
+
 #####################
 # TEMA ESTRUCTURADO #
 #####################
@@ -78,7 +81,7 @@ def estribillo():
     m1.stop()
     s3.reset() >> karp(P[0,0,PRand(2),PRand(2),4,2,3,4], cut=0, amp=1, dur=[1/2], drive=0.5, glide=0,glidedelay=0.8, oct=var([6],4), echo=0, cutoff=0.2).every(4,'stutter',3,dur=0.75,oct=s3.oct+1)
 def puente2():
-    abajo()    
+    abajo()
 def parte3():
     Group(d1,d2, o1,o1, m1).solo()
 def parte4():
@@ -106,7 +109,7 @@ cancion = intro + parte2 + mix + cierre
 #def efecto1():
 #    p1 >> piano([0,0,5,5,4,2], drive=0.5, dur=PSum(4,4),amp=0.4,pan=PWhite(-1,1))
 
-    
+
 efectos = {
     #"verso3": {"efecto": efecto1, "restantes": 1},
 }
@@ -117,18 +120,6 @@ def reset():
     pass
 
 ### REPRODUCTOR ###
-
-def countRepetitions(fname,cancion):
-    fnames = list(map(lambda x : x.__name__,cancion))
-    return fnames.count(fname)
-def reproducir(cancion,efectos,reset,start):
-    reset()
-    if len(cancion) > 0:
-        cancion[0]()
-        fname = cancion[0].__name__
-        if fname in efectos and countRepetitions(fname,cancion) == efectos[fname]["restantes"]:
-            efectos[fname]["efecto"]()
-        Clock.schedule(lambda : reproducir(cancion[1:],efectos,reset,start+32),start + 32)
 
 start = Clock.mod(8) - 0.1
 Clock.schedule(lambda : reproducir(cancion,efectos,reset,start), start)
